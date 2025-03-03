@@ -40,7 +40,7 @@ struct ContentView: View {
     
     @State public var symbols = ["eating", "happy", "love", "scary", "sleeping"]
     @State public var numbers = [0, 1, 2]
-    @State public var counter = 0
+    @State public var counter = 6
     @State private var showingAlert: Choice?
     
     var body: some View {
@@ -124,16 +124,16 @@ struct ContentView: View {
                     self.numbers[1] = Int.random(in: 0..<symbols.count)
                     self.numbers[2] = Int.random(in: 0..<symbols.count)
                     
-                    counter += 1
+                    counter -= 1
                     
                     if self.numbers[0] == self.numbers[1] && numbers[1] == numbers[2] {
                         self.showingAlert = .success
-                        counter = 0
+                        counter = 6
                     }
                     
-                    if counter > 5 {
+                    if counter == 0 {
                         self.showingAlert = .failure
-                        counter = 0
+                        counter = 6
                     }
                 } label: {
                     RoundedRectangle(cornerRadius: 10)
@@ -147,6 +147,7 @@ struct ContentView: View {
                         .frame(width: 200, height: 40, alignment: .center)
                         .shadow(color: .gray, radius: 1, y: 4)
                 }
+                Text("Number of attempts left - \(counter)")
             }
             .alert(item: $showingAlert) { alert -> Alert in
                 switch alert {
